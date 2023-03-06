@@ -37,20 +37,24 @@ public class User {
         return false;
     }
 
-    public void borrowBook(Book book, Library library) {
+    public void borrowBook(String ISBN, Library library) {
+        Book book = library.searchBook(ISBN);
         if (library.doesBookExist(book.getISBN())){
             ListOfrentedBooks.add(book);
             library.decreaseBook(book);
+            System.out.println("Books Has Been Rented.");
         }
         else{
             System.out.println("book doesn't exist!");
         }
     }
 
-    public void returnBook(Book book, Library library){
+    public void returnBook(String ISBN, Library library){
+        Book book = library.searchBook(ISBN);
         if(isBookRented(book.getISBN())){
             ListOfrentedBooks.remove(book);
             library.increaseBook(book);
+            System.out.println("Books Has Been Returned.");
         }
         else{
             System.out.println("you don't have this book!");
