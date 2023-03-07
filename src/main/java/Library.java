@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Library {
     private List<Book> booksList;
@@ -27,11 +24,11 @@ public class Library {
 
     public Book searchBook(String ISBN) {
         for (Book book : booksList) {
-            if (book.getISBN() == ISBN) {
+            if (Objects.equals(book.getISBN(), ISBN)) {
                 return book;
             }
         }
-        return null;
+        return new Book("","","","");
     }
 
     public void updateBook(Book oustedBook, Book appointedBook){
@@ -43,7 +40,7 @@ public class Library {
 
     public boolean doesBookExist(String ISBN){
         for (Book book : booksList) {
-            if (book.getISBN() == ISBN && ISBNsList.get(book.getISBN()) > 0) {
+            if (Objects.equals(book.getISBN(), ISBN) && ISBNsList.get(book.getISBN()) > 0) {
                 return true;
             }
         }
@@ -83,24 +80,32 @@ public class Library {
     }
 
     public void updateUser(User oustedUser, User appointedUser){
-        int index = usersList.indexOf(oustedUser);
-        usersList.set(index, appointedUser);
+        if(doesUserExist(oustedUser.getUsername())) {
+            int index = usersList.indexOf(oustedUser);
+            usersList.set(index, appointedUser);
+        }
+    }
+    public void updateUser(String userDelete, String newUser){
+        User oustedUser = searchUser(userDelete);
+        User appointedUser = searchUser(newUser);
+        usersList.set(usersList.indexOf(oustedUser), appointedUser);
     }
 
     public User searchUser(String username){
         for (User user : usersList){
-            if(user.getUsername() == username){
+            if(Objects.equals(user.getUsername(), username)){
                 return user;
             }
         }
-        return null;
+        return new User("","");
     }
 
     public boolean doesUserExist(String username){
         for (User user : usersList){
-            if(user.getUsername() == username){
+            if(user.getUsername().equals(username)){
                 return true;
             }
+
         }
         return false;
     }
@@ -117,11 +122,11 @@ public class Library {
 
     public Librarian searchLibrarian(String username) {
         for (Librarian librarian : librariansList) {
-            if (librarian.getUsername() == username) {
+            if (Objects.equals(librarian.getUsername(), username)) {
                 return librarian;
             }
         }
-        return null;
+        return new Librarian("","");
     }
 
     public void updateLibrarian(Librarian oustedLibrarian, Librarian appointedLibrarian){
@@ -131,7 +136,7 @@ public class Library {
 
     public boolean doesLibrarianExist(String username){
         for (Librarian librarian : librariansList) {
-            if (librarian.getUsername() == username) {
+            if (Objects.equals(librarian.getUsername(), username)) {
                 return true;
             }
         }

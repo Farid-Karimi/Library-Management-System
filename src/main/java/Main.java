@@ -1,7 +1,7 @@
 import java.util.Objects;
 import java.util.Scanner;
 
-public class main {
+public class Main {
     static Scanner input = new Scanner(System.in);
     static Library library = new Library();
 
@@ -25,17 +25,15 @@ public class main {
 
         int operation = input.nextInt();
 
-        String username = "";
-        String password = "";
-        String bookName = "";
+        String username;
+        String password;
+        String bookName;
         User tempUser;
-        Librarian tempLibrarian;
-        Book tempBook;
-
 
         switch(operation) {
             case 1:
                 // code for searching user
+                System.out.println("Enter Username:");
                 username = input.next();
                 if(library.doesUserExist(username)) {
                     System.out.println("User Found!");
@@ -43,9 +41,11 @@ public class main {
                 else{
                     System.out.println("User Not Found!");
                 }
+                adminPanel();
                 break;
             case 2:
                 // code for searching librarian
+                System.out.println("Enter Username:");
                 username = input.next();
                 if(library.doesLibrarianExist(username)) {
                     System.out.println("Librarian Found!");
@@ -53,9 +53,11 @@ public class main {
                 else{
                     System.out.println("User Not Found!");
                 }
+                adminPanel();
                 break;
             case 3:
                 // code for searching books
+                System.out.println("Enter ISBN Of The Book:");
                 bookName = input.next();
                 if(library.doesBookExist(bookName)) {
                     System.out.println("Book Found!");
@@ -63,6 +65,7 @@ public class main {
                 else{
                     System.out.println("Book Not Found!");
                 }
+                adminPanel();
                 break;
             case 4:
                 // code for adding user
@@ -72,6 +75,7 @@ public class main {
                 password = input.next();
                 tempUser = new User(username,password);
                 library.addUser(tempUser);
+                adminPanel();
                 break;
             case 5:
                 // code for adding librarian
@@ -81,36 +85,36 @@ public class main {
                 password = input.next();
                 Librarian librarian = new Librarian(username,password);
                 library.addLibrarian(librarian);
+                adminPanel();
                 break;
             case 6:
                 // code for adding books
                 System.out.println("Enter The ISBN:");
-                bookName = input.nextLine();
+                bookName = input.next();
                 library.addBook(library.searchBook(bookName),1);
+                adminPanel();
                 break;
             case 7:
                 // code for removing user
                 System.out.println("Enter Username:");
                 username = input.next();
-                System.out.println("Enter Password:");
-                password = input.next();
-                tempUser = new User(username,password);
-                library.removeUser(tempUser);
+                library.removeUser(library.searchUser(username));
+                adminPanel();
                 break;
             case 8:
-                // code for removing librarian
+                //code for removing librarian
                 System.out.println("Enter Username:");
                 username = input.next();
-                System.out.println("Enter Password:");
-                password = input.next();
-                tempLibrarian = new Librarian(username,password);
-                library.removeLibrarian(tempLibrarian);
+                library.removeLibrarian(library.searchLibrarian(username));
+                adminPanel();
                 break;
             case 9:
                 // code for removing books
                 System.out.println("Enter The ISBN:");
+                input.nextLine();
                 bookName = input.nextLine();
                 library.removeBook(library.searchBook(bookName));
+                adminPanel();
                 break;
             case 10:
                 // code for updating user
@@ -118,13 +122,13 @@ public class main {
                 username = input.next();
                 System.out.println("Enter Old Password:");
                 password = input.next();
-                tempUser = new User(username , password);
                 System.out.println("Enter New Username:");
-                username = input.next();
+                String newUsername = input.next();
                 System.out.println("Enter New Password:");
                 password = input.next();
-                User appointedUser = new User(username , password);
-                library.updateUser(tempUser , appointedUser);
+                User appointedUser = new User(newUsername , password);
+                library.updateUser(library.searchUser(username) , appointedUser);
+                adminPanel();
                 break;
             case 11:
                 // code for updating librarian
@@ -132,37 +136,44 @@ public class main {
                 username = input.next();
                 System.out.println("Enter Old Password:");
                 password = input.next();
-                tempLibrarian = new Librarian(username , password);
                 System.out.println("Enter New Username:");
-                username = input.next();
+                newUsername = input.next();
                 System.out.println("Enter New Password:");
                 password = input.next();
-                Librarian appointedLibrarian = new Librarian(username , password);
-                library.updateLibrarian(tempLibrarian , appointedLibrarian);
+                Librarian appointedLibrarian = new Librarian(newUsername , password);
+                library.updateLibrarian(library.searchLibrarian(username) , appointedLibrarian);
+                adminPanel();
                 break;
             case 12:
                 // code for updating books
-                System.out.println("Enter Name Of The Book:");
+                input.nextLine();
+                System.out.println("Enter Name Of The New Book:");
                 bookName = input.nextLine();
-                System.out.println("Enter Name Of The Author:");
+                System.out.println("Enter Name Of The New Author:");
                 String author = input.nextLine();
-                System.out.println("Enter Year Of Publish:");
+                System.out.println("Enter Year Of New Publish:");
                 String YOP = input.nextLine();
-                System.out.println("Enter ISBN:");
+                System.out.println("Enter New ISBN:");
                 String ISBN = input.nextLine();
                 Book book = new Book(bookName,author,YOP,ISBN);
+                System.out.println("Enter ISBN Of The Old Book:");
+                ISBN = input.nextLine();
+                library.updateBook(library.searchBook(ISBN) , book);
+                adminPanel();
                 break;
             case 13:
                 // code for Decreasing books quantity
                 System.out.println("Enter ISBN:");
                 ISBN = input.nextLine();
                 library.decreaseBook(library.searchBook(ISBN));
+                adminPanel();
                 break;
             case 14:
                 // code for Increasing books quantity
                 System.out.println("Enter ISBN:");
                 ISBN = input.nextLine();
                 library.increaseBook(library.searchBook(ISBN));
+                adminPanel();
                 break;
             default:
                 System.out.println("Invalid operation.");
@@ -171,32 +182,35 @@ public class main {
 
     }
     public static void RentAndReturn(User user){
-        System.out.println("Enter  Your Desired Operation:");
+        System.out.println("\nEnter Your Desired Operation:");
         System.out.println("1.Rent Books");
         System.out.println("2.Return Books");
         System.out.println("3.List Of Rented Books");
+        System.out.println("4.Log Out!");
 
         int choice = input.nextInt();
 
-        String ISBN = "";
+        String ISBN;
         switch (choice){
             case 1:
                 System.out.println("Enter The ISBN Of The Books:");
-                ISBN = input.nextLine();
+                ISBN = input.next();
                 user.borrowBook(ISBN , library);
-
+                RentAndReturn(user);
                 break;
             case 2:
                 System.out.println("Enter The ISBN Of The Books:");
-                ISBN = input.nextLine();
+                ISBN = input.next();
                 user.returnBook(ISBN , library);
-
+                RentAndReturn(user);
                 break;
             case 3:
                 System.out.println("Here is a list of the Books you rented");
-                System.out.println(user.getRentedBooks());
-
+                user.getRentedBooks();
+                RentAndReturn(user);
                 break;
+            case 4:
+                main(null);
             default:
                 System.out.println("Wrong Input!");
         }
@@ -212,17 +226,21 @@ public class main {
         library.addBook(book2, 3);
         library.addBook(book3, 2);
 
-        User user1 = new User("farid", "401222112");
-        User user2 = new User("shayan", "401222086");
+        User user1 = new User("farid", "karimi");
+        User user2 = new User("shayan", "shahrabi");
+        User user3 = new User("navid", "ebadi");
 
         library.addUser(user1);
         library.addUser(user2);
+        library.addUser(user3);
 
-        Librarian librarian1 = new Librarian("mohamad", "401222020");
-        Librarian librarian2 = new Librarian("rana", "401222066");
+        Librarian librarian1 = new Librarian("mohamad", "basouli");
+        Librarian librarian2 = new Librarian("rana", "rokni");
+        Librarian librarian3 = new Librarian("hooman", "parsaei");
 
         library.addLibrarian(librarian1);
         library.addLibrarian(librarian2);
+        library.addLibrarian(librarian3);
 
         //-------------------------------------------------------------------------------------------------------
         System.out.println("Please Enter Your Username and Password");
@@ -237,19 +255,22 @@ public class main {
             }
             else{
                 System.out.println("Wrong Password!");
+                main(null);
             }
 
         }
         else if (library.doesLibrarianExist(username)) {
-            if (library.searchLibrarian(username).getPassword() == password){
+            if (Objects.equals(library.searchLibrarian(username).getPassword(), password)){
                 adminPanel();
             }
             else{
                 System.out.println("Wrong Password!");
+                main(null);
             }
         }
         else{
             System.out.println("User Doesn't Exist!");
+            main(null);
         }
 
 

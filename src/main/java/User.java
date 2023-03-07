@@ -13,10 +13,10 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
     public String getPassword() {
-        return password;
+        return this.password;
     }
 
     public void setUsername(String username) {
@@ -25,8 +25,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public ArrayList<Book> getRentedBooks() {
-        return ListOfrentedBooks;
+    public void getRentedBooks() {
+        String info;
+        for(Book book : ListOfrentedBooks){
+            info = book.getISBN() + " / " + book.getName();
+            System.out.println(info);
+        }
     }
     public boolean isBookRented(String ISBN){
         for (Book book : ListOfrentedBooks){
