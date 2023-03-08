@@ -75,6 +75,7 @@ public class Main {
                 password = input.next();
                 tempUser = new User(username,password);
                 library.addUser(tempUser);
+                System.out.println("User Has Been Successfully Added!");
                 adminPanel();
                 break;
             case 5:
@@ -85,6 +86,7 @@ public class Main {
                 password = input.next();
                 Librarian librarian = new Librarian(username,password);
                 library.addLibrarian(librarian);
+                System.out.println("Librarian Has Been Successfully Added!");
                 adminPanel();
                 break;
             case 6:
@@ -92,6 +94,7 @@ public class Main {
                 System.out.println("Enter The ISBN:");
                 bookName = input.next();
                 library.addBook(library.searchBook(bookName),1);
+                System.out.println("Book Has Been Successfully Added!");
                 adminPanel();
                 break;
             case 7:
@@ -99,6 +102,7 @@ public class Main {
                 System.out.println("Enter Username:");
                 username = input.next();
                 library.removeUser(library.searchUser(username));
+                System.out.println("User Has Been Successfully Removed!");
                 adminPanel();
                 break;
             case 8:
@@ -106,6 +110,7 @@ public class Main {
                 System.out.println("Enter Username:");
                 username = input.next();
                 library.removeLibrarian(library.searchLibrarian(username));
+                System.out.println("Librarian Has Been Successfully Removed!");
                 adminPanel();
                 break;
             case 9:
@@ -114,6 +119,7 @@ public class Main {
                 input.nextLine();
                 bookName = input.nextLine();
                 library.removeBook(library.searchBook(bookName));
+                System.out.println("Book Has Been Successfully Removed!");
                 adminPanel();
                 break;
             case 10:
@@ -128,6 +134,7 @@ public class Main {
                 password = input.next();
                 User appointedUser = new User(newUsername , password);
                 library.updateUser(library.searchUser(username) , appointedUser);
+                System.out.println("User Has Been Successfully Update!");
                 adminPanel();
                 break;
             case 11:
@@ -142,6 +149,7 @@ public class Main {
                 password = input.next();
                 Librarian appointedLibrarian = new Librarian(newUsername , password);
                 library.updateLibrarian(library.searchLibrarian(username) , appointedLibrarian);
+                System.out.println("Librarian Has Been Successfully Update!");
                 adminPanel();
                 break;
             case 12:
@@ -159,6 +167,7 @@ public class Main {
                 System.out.println("Enter ISBN Of The Old Book:");
                 ISBN = input.nextLine();
                 library.updateBook(library.searchBook(ISBN) , book);
+                System.out.println("Book Has Been Successfully Update!");
                 adminPanel();
                 break;
             case 13:
@@ -196,16 +205,18 @@ public class Main {
                 System.out.println("Enter The ISBN Of The Books:");
                 ISBN = input.next();
                 user.borrowBook(ISBN , library);
+                System.out.println("Book Has Been Successfully Rented!");
                 RentAndReturn(user);
                 break;
             case 2:
                 System.out.println("Enter The ISBN Of The Books:");
                 ISBN = input.next();
                 user.returnBook(ISBN , library);
+                System.out.println("User Has Been Successfully Returned!");
                 RentAndReturn(user);
                 break;
             case 3:
-                System.out.println("Here is a list of the Books you rented");
+                System.out.println("Here Is A List Of The Books You Rented:");
                 user.getRentedBooks();
                 RentAndReturn(user);
                 break;
@@ -221,10 +232,24 @@ public class Main {
         Book book1 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "1954", "978-0547928210");
         Book book2 = new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling", "1997", "978-0747532743");
         Book book3 = new Book("To Kill a Mockingbird", "Harper Lee", "1960", "978-0446310789");
+        Book book4 = new Book("1984", "George Orwell", "1949", "978-0451524935");
+        Book book5 = new Book("The Great Gatsby", "F. Scott Fitzgerald", "1925", "978-0743273565");
+        Book book6 = new Book("Pride and Prejudice", "Jane Austen", "1813", "978-0141439518");
+        Book book7 = new Book("The Catcher in the Rye", "J.D. Salinger", "1951", "978-0316769488");
+        Book book8 = new Book("The Hobbit", "J.R.R. Tolkien", "1937", "978-0547928227");
+        Book book9 = new Book("The Lord of the Rings", "J.R.R. Tolkien", "1954", "978-0618640157");
+
 
         library.addBook(book1, 5);
         library.addBook(book2, 3);
         library.addBook(book3, 2);
+        library.addBook(book4, 4);
+        library.addBook(book5, 5);
+        library.addBook(book6, 2);
+        library.addBook(book7, 7);
+        library.addBook(book8, 1);
+        library.addBook(book9, 3);
+
 
         User user1 = new User("farid", "karimi");
         User user2 = new User("shayan", "shahrabi");
